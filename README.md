@@ -1,29 +1,21 @@
-# Create T3 App
+# First Gear
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Website for First Gear, a monthly cars & coffee meet in metro Detroit. It shows the next meet, what's coming up, photos, and social links.
 
-## What's next? How do I make an app with this?
+Built with Next.js (App Router), React 19, and Tailwind CSS.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Develop
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+```sh
+bun install
+bun dev
+```
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+Other scripts: `bun run build`, `bun run check` (lint + typecheck), `bun test`.
 
-## Learn More
+## How it works
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
-
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- **Events** come from the [detmeets.com](https://detmeets.com) API, fetched in `getEvents()` in [src/lib/events.ts](src/lib/events.ts) and cached for an hour. Past and cancelled meets are filtered out. If the API is down, no events are shown.
+- **Social links** live in [src/data/links.ts](src/data/links.ts).
+- **Photos** are in `public/gallery/`, brand assets in `public/brand/`.
+- **Pages** are in [src/app/](src/app/): home, `/calendar`, and `/pfp-icon`.

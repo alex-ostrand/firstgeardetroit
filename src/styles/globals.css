@@ -1,6 +1,110 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: var(--font-pt-serif), Georgia, "Times New Roman", serif;
+  --font-headline: var(--font-old-standard), Georgia, "Times New Roman", serif;
+  --font-masthead: var(--font-anton), Impact, "Arial Narrow", sans-serif;
+  --color-paper: #efe8da;
+  --color-ink: #2a2420;
+  --color-muted: #5a5148;
+  --color-rule: #2a2420;
+  --color-desk: #27221c;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  background-color: var(--color-desk);
+  scrollbar-color: #4a463d var(--color-desk);
+}
+
+body {
+  background-color: var(--color-desk);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* The newspaper itself: a bounded sheet lying on the desk. */
+.sheet {
+  background-color: var(--color-paper);
+  background-image: radial-gradient(ellipse 120% 90% at 50% 0%, #f3edde 0%, var(--color-paper) 55%, #e5dbc5 100%);
+  border: 1px solid rgba(42, 36, 32, 0.55);
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.5),
+    0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+::selection {
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-paper);
+  outline-offset: 3px;
+}
+
+.sheet :focus-visible {
+  outline-color: var(--color-ink);
+}
+
+/* Print grain over the whole scene; fixed and inert so it never repaints on scroll. */
+.paper-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0.06'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Classic thick-thin newspaper rule above section heads. */
+.head-rule {
+  border-top: 3px solid var(--color-ink);
+  position: relative;
+  padding-top: 10px;
+}
+
+.head-rule::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--color-ink);
+}
+
+/* The lead story's body: justified, and two flowing columns on wide screens. */
+.story-body {
+  font-size: 1.1875rem;
+  line-height: 1.7;
+}
+
+.story-body p {
+  margin-bottom: 1.1rem;
+}
+
+.story-body h2 {
+  break-inside: avoid;
+}
+
+@media (min-width: 1024px) {
+  .story-body {
+    columns: 2;
+    column-gap: 2.5rem;
+    column-rule: 1px solid rgba(42, 36, 32, 0.35);
+  }
+}
+
+/* Newspaper drop cap on lead paragraphs. */
+.drop-cap::first-letter {
+  float: left;
+  padding-right: 0.08em;
+  padding-top: 0.05em;
+  font-size: 3.1em;
+  font-weight: 700;
+  line-height: 0.82;
 }
